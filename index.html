@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CP值即時比價器</title>
+    <title>CP值比價器</title>
     <style>
         :root {
             /* Colors */
@@ -15,11 +15,7 @@
             --color-primary-hover: #218090;
             --color-primary-active: #1A6B7A;
             --color-secondary: rgba(94, 82, 64, 0.12);
-            --color-secondary-hover: rgba(94, 82, 64, 0.2);
-            --color-secondary-active: rgba(94, 82, 64, 0.25);
             --color-border: rgba(46, 86, 93, 0.2);
-            --color-btn-primary-text: rgba(252, 252, 249, 1);
-            --color-card-border: rgba(94, 82, 64, 0.12);
             --color-best-deal: rgba(32, 184, 205, 0.1);
             --color-best-deal-border: #20B8CD;
             --color-accent: #BADFDE;
@@ -28,16 +24,13 @@
 
             /* Typography */
             --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
-            --font-size-sm: 12px;
+            --font-size-sm: 11px;
             --font-size-base: 14px;
             --font-size-md: 14px;
             --font-size-lg: 16px;
             --font-size-xl: 18px;
-            --font-size-2xl: 20px;
             --font-size-3xl: 24px;
-            --font-size-4xl: 30px;
             --font-weight-medium: 500;
-            --font-weight-semibold: 550;
             --font-weight-bold: 600;
 
             /* Spacing & Radius */
@@ -46,22 +39,12 @@
             --space-12: 12px;
             --space-16: 16px;
             --space-20: 20px;
-            --space-24: 24px;
-            --space-32: 32px;
             --radius-base: 8px;
-            --radius-md: 10px;
             --radius-lg: 12px;
-            --radius-full: 9999px;
-
-            /* Animation & Shadows */
-            --duration-normal: 250ms;
-            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
             --shadow-card: 0 4px 12px rgba(9, 23, 23, 0.1);
-            --shadow-card-hover: 0 8px 24px rgba(9, 23, 23, 0.15);
             --focus-ring: 0 0 0 3px rgba(33, 128, 141, 0.4);
         }
 
-        /* Base Styles */
         html { box-sizing: border-box; font-size: var(--font-size-base); }
         *, *::before, *::after { box-sizing: inherit; }
         body {
@@ -76,49 +59,50 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: var(--space-24);
+            padding: var(--space-12);
         }
 
         /* Header */
-        .header { text-align: center; margin-bottom: var(--space-32); }
-        .header h1 { font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); margin: 0; }
+        .header { text-align: center; margin-bottom: var(--space-12); }
+        .header h1 { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); margin: 0; }
 
         /* Controls */
         .controls {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            gap: var(--space-16);
-            margin-bottom: var(--space-24);
+            align-items: center;
+            margin-bottom: var(--space-16);
+            background: rgba(255, 255, 253, 0.6);
+            padding: var(--space-8) var(--space-12);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(46, 86, 93, 0.1);
         }
 
-        /* Form Elements */
-        .form-group { margin-bottom: var(--space-16); }
-        .form-label { display: block; margin-bottom: var(--space-8); font-weight: var(--font-weight-medium); font-size: var(--font-size-sm); }
+        .form-group { display: flex; align-items: center; gap: 6px; }
+        .form-label { font-weight: var(--font-weight-medium); font-size: var(--font-size-md); white-space: nowrap; }
+        
         .form-control {
             display: block;
             width: 100%;
-            padding: var(--space-8) var(--space-12);
+            padding: 6px var(--space-8);
             font-size: var(--font-size-md);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-base);
             background-color: var(--color-surface);
-            transition: all var(--duration-normal) var(--ease-standard);
+            outline: none;
         }
-        .form-control:focus { outline: none; border-color: var(--color-primary); box-shadow: var(--focus-ring); }
+        .form-control:focus { border-color: var(--color-primary); box-shadow: var(--focus-ring); }
 
         /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: var(--space-8) var(--space-16);
+            padding: 6px var(--space-12);
             border-radius: var(--radius-base);
             font-weight: 500;
             cursor: pointer;
-            transition: all var(--duration-normal) var(--ease-standard);
             border: none;
-            text-decoration: none;
         }
         .btn--secondary { background: var(--color-orange); color: var(--color-text); }
         .btn--secondary:hover { background: var(--color-dark-orange); color: #fff; }
@@ -126,66 +110,75 @@
         /* Products Grid */
         .products-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: var(--space-20);
-            margin-bottom: var(--space-32);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-12);
+            margin-bottom: var(--space-16);
         }
 
         .product-card {
             background: var(--color-surface);
             border-radius: var(--radius-lg);
-            padding: var(--space-20);
+            padding: var(--space-12);
             box-shadow: var(--shadow-card);
             border: 2px solid transparent;
             position: relative;
-            transition: all var(--duration-normal) var(--ease-standard);
         }
-        .product-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
 
         /* Best Deal Styling */
         .product-card.best-deal {
             border-color: var(--color-best-deal-border);
             background: var(--color-best-deal);
-            box-shadow: 0 8px 24px rgba(32, 184, 205, 0.2);
+            box-shadow: 0 4px 12px rgba(32, 184, 205, 0.15);
         }
         .product-card.best-deal::before {
             content: "🏆 最划算";
             position: absolute;
             top: -1px;
-            right: var(--space-16);
+            right: var(--space-12);
             background: var(--color-primary);
             color: #fff;
-            padding: var(--space-4) var(--space-12);
+            padding: 1px var(--space-8);
             border-radius: 0 0 var(--radius-base) var(--radius-base);
-            font-size: var(--font-size-sm);
+            font-size: 10px;
             font-weight: var(--font-weight-medium);
         }
 
-        .product-inputs { display: grid; gap: var(--space-12); margin-bottom: var(--space-16); }
-        .two-col-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
-        .unit-container { display: flex; align-items: center; gap: 4px; }
-        .unit-text { font-size: 11px; color: var(--color-text-secondary); white-space: nowrap; }
+        .product-inputs { display: grid; gap: var(--space-8); margin-bottom: var(--space-8); }
+        
+        /* 三欄並排的核心縮短設計 */
+        .three-col-row { 
+            display: grid; 
+            grid-template-columns: 1.2fr 0.9fr 0.9fr; 
+            gap: var(--space-4); 
+        }
+        
+        .sub-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+            display: block;
+        }
 
         /* Calculation Result */
         .calculation-result {
-            background: rgba(186, 223, 222, 0.3);
+            background: rgba(186, 223, 222, 0.2);
             border-radius: var(--radius-base);
-            padding: var(--space-12);
-            border-left: 4px solid var(--color-primary);
-            min-height: 56px;
+            padding: var(--space-4) var(--space-8);
+            border-left: 3px solid var(--color-primary);
+            min-height: 38px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
         }
-        .calculation-result.empty { background: rgba(0, 0, 0, 0.05); border-left-color: var(--color-border); }
+        .calculation-result.empty { background: rgba(0, 0, 0, 0.03); border-left-color: var(--color-border); }
         .calculation-line { font-size: var(--font-size-sm); color: var(--color-text); font-weight: var(--font-weight-medium); }
-        .calculation-line.primary { font-size: var(--font-size-base); color: var(--color-primary); font-weight: var(--font-weight-semibold); }
+        .calculation-line.primary { font-size: var(--font-size-base); color: var(--color-primary); font-weight: var(--font-weight-bold); }
 
         /* Summary */
         .result-summary {
             background: var(--color-surface);
             border-radius: var(--radius-lg);
-            padding: var(--space-20);
+            padding: var(--space-12);
             box-shadow: var(--shadow-card);
             text-align: center;
         }
@@ -193,12 +186,12 @@
             background: var(--color-best-deal);
             border: 1px solid var(--color-best-deal-border);
             border-radius: var(--radius-base);
-            padding: var(--space-16);
+            padding: var(--space-8);
         }
 
-        @media (max-width: 768px) {
-            .controls { flex-direction: column; align-items: stretch; }
-            .products-container { grid-template-columns: 1fr; }
+        /* 手機橫向自動適應 */
+        @media (max-width: 950px) and (orientation: landscape) {
+            .products-container { grid-template-columns: 1fr 1fr; gap: var(--space-8); }
         }
     </style>
 </head>
@@ -210,8 +203,8 @@
 
         <div class="controls">
             <div class="form-group">
-                <label for="itemCount" class="form-label">比價商品數量</label>
-                <select id="itemCount" class="form-control">
+                <label for="itemCount" class="form-label">比價數量</label>
+                <select id="itemCount" class="form-control" style="width: 65px; padding: 4px;">
                     <option value="2">2</option>
                     <option value="3" selected>3</option>
                     <option value="4">4</option>
@@ -219,13 +212,12 @@
                     <option value="6">6</option>
                 </select>
             </div>
-            <button id="clearAll" class="btn btn--secondary">清空所有</button>
+            <button id="clearAll" class="btn btn--secondary">清空</button>
         </div>
 
         <div id="productsContainer" class="products-container"></div>
 
         <div class="result-summary" id="resultSummary" style="display: none;">
-            <h3>比價結果</h3>
             <div class="best-deal-info" id="bestDealInfo"></div>
         </div>
     </div>
@@ -261,33 +253,25 @@
             }
 
             generateProducts(count) {
-                // 如果目前資料量比新設定的少，就補齊資料狀態
                 while (this.products.length < count) {
                     this.products.push({ price: 0, valueG: 0, package: 1, box: 1, valid: false, index: this.products.length });
                 }
-                // 如果目前資料量比新設定的多，就截斷
                 if (this.products.length > count) {
                     this.products.length = count;
                 }
 
-                // 重新渲染畫面上的 DOM 節點
                 this.productsContainer.innerHTML = '';
                 for (let i = 0; i < count; i++) {
                     const card = this.createProductCard(i);
                     this.productsContainer.appendChild(card);
                     
-                    // 重新將舊有的資料回填到輸入框中（若有數據的話）
                     const p = this.products[i];
                     if (p.price > 0) card.querySelector('.input-price').value = p.price;
-                    if (p.valueG > 0) {
-                        card.querySelector('.input-g').value = p.valueG;
-                        card.querySelector('.input-kg').value = parseFloat((p.valueG / 1000).toFixed(4));
-                    }
+                    if (p.valueG > 0) card.querySelector('.input-g').value = p.valueG;
                     if (p.package !== 1) card.querySelector('.input-package').value = p.package;
                     if (p.box !== 1) card.querySelector('.input-box').value = p.box;
                 }
                 
-                // 重新執行一次大體檢，保持最划算金框與結果同步
                 for (let i = 0; i < count; i++) {
                     this.calculate(i);
                 }
@@ -298,31 +282,24 @@
                 card.className = 'product-card';
                 card.innerHTML = `
                     <div class="product-inputs">
-                        <div style="font-weight: var(--font-weight-bold); color: var(--color-text-secondary); margin-bottom: 2px;">項目 ${index + 1}</div>
-                        <div class="form-group">
-                            <label class="form-label">價格 (元)</label>
+                        <div style="font-weight: var(--font-weight-bold); color: var(--color-text-secondary); font-size:12px; margin-bottom:-4px;">項目 ${index + 1}</div>
+                        
+                        <div>
+                            <span class="sub-label">價格 (元)</span>
                             <input type="number" class="form-control input-price" placeholder="請輸入金額" min="0" step="0.01">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">容量 / 重量 / 數量</label>
-                            <div class="two-col-row">
-                                <div class="unit-container">
-                                    <input type="number" class="form-control input-g" placeholder="輸入小單位" min="0" step="0.01">
-                                    <span class="unit-text">g/ml/抽</span>
-                                </div>
-                                <div class="unit-container">
-                                    <input type="number" class="form-control input-kg" placeholder="輸入大單位" min="0" step="0.001">
-                                    <span class="unit-text">kg/L</span>
-                                </div>
+                        
+                        <div class="three-col-row">
+                            <div>
+                                <span class="sub-label">輸入單位(g/ml)</span>
+                                <input type="number" class="form-control input-g" placeholder="數量" min="0" step="0.01">
                             </div>
-                        </div>
-                        <div class="two-col-row">
-                            <div class="form-group">
-                                <label class="form-label">包裝數</label>
+                            <div>
+                                <span class="sub-label">包裝數</span>
                                 <input type="number" class="form-control input-package" placeholder="1" min="1">
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">箱數</label>
+                            <div>
+                                <span class="sub-label">箱數</span>
                                 <input type="number" class="form-control input-box" placeholder="1" min="1">
                             </div>
                         </div>
@@ -334,7 +311,6 @@
 
                 const priceInput = card.querySelector('.input-price');
                 const gInput = card.querySelector('.input-g');
-                const kgInput = card.querySelector('.input-kg');
                 const packageInput = card.querySelector('.input-package');
                 const boxInput = card.querySelector('.input-box');
 
@@ -344,25 +320,7 @@
                 });
 
                 gInput.addEventListener('input', () => {
-                    const val = parseFloat(gInput.value) || 0;
-                    this.products[index].valueG = val;
-                    if (gInput.value === '') {
-                        kgInput.value = '';
-                    } else {
-                        kgInput.value = parseFloat((val / 1000).toFixed(4));
-                    }
-                    this.calculate(index);
-                });
-
-                kgInput.addEventListener('input', () => {
-                    const val = parseFloat(kgInput.value) || 0;
-                    this.products[index].valueG = val * 1000;
-                    if (kgInput.value === '') {
-                        gInput.value = '';
-                        this.products[index].valueG = 0;
-                    } else {
-                        gInput.value = parseFloat((val * 1000).toFixed(4));
-                    }
+                    this.products[index].valueG = parseFloat(gInput.value) || 0;
                     this.calculate(index);
                 });
 
@@ -382,7 +340,7 @@
             calculate(idx) {
                 const p = this.products[idx];
                 const card = p.cardEl;
-                if (!card) return; // 確保節點存在
+                if (!card) return;
                 
                 const resultEl = card.querySelector(`#result-${idx}`);
 
@@ -430,9 +388,8 @@
                 const saving = worst !== best ? ((best.gramsPerYuan - worst.gramsPerYuan) / worst.gramsPerYuan * 100).toFixed(1) : 0;
 
                 this.bestDealInfo.innerHTML = `
-                    <h4 style="margin:0 0 8px 0; color:var(--color-primary);">🏆 最划算選擇是：項目 ${best.index + 1}</h4>
-                    <p style="margin:0;">每 1 元可買到 <strong>${best.gramsPerYuan.toFixed(2)}</strong> 單位量<br>
-                    ${saving > 0 ? `買它比買到最貴的划算，相對省下了 <strong>${saving}%</strong> 的預算！` : '目前這是唯一的有效選項'}</p>
+                    <h4 style="margin:0 0 2px 0; color:var(--color-primary); font-size:14px;">🏆 最划算：項目 ${best.index + 1}</h4>
+                    <p style="margin:0; font-size:12px;">每 1 元可買到 <strong>${best.gramsPerYuan.toFixed(2)}</strong> 單位量 ${saving > 0 ? `(省下 <strong>${saving}%</strong>)` : ''}</p>
                 `;
                 this.resultSummary.style.display = 'block';
             }
