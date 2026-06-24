@@ -55,7 +55,7 @@
         }
 
         .form-group { display: flex; flex-direction: column; gap: 8px; }
-        .form-label { font-weight: 500; font-size: 14px; color: var(--color-text); }
+        .form-label { font-weight: 500; font-size: 14px; color: var(--color-text); white-space: nowrap; }
         
         .form-control {
             display: block;
@@ -122,10 +122,8 @@
 
         .product-inputs { display: grid; gap: 16px; margin-bottom: 16px; }
         
-        /* 讓電腦版的包裝數和箱數也在同一列並排 */
+        /* 電腦版並排佈局 */
         .package-box-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        
-        /* 雙欄大單位的連動排版 */
         .unit-flex-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .unit-container { display: flex; align-items: center; gap: 4px; width: 100%; }
         .unit-text { font-size: 11px; color: var(--color-text-secondary); white-space: nowrap; }
@@ -160,13 +158,15 @@
             padding: 16px;
         }
 
-        /* 📱 手機自適應切換區 */
+        /* 📱 手機自適應切換區（強迫標籤與輸入格擠在同一行，不換行） */
         @media (max-width: 768px) {
             body { padding: 12px; }
             .header { margin-bottom: 12px; }
             .header h1 { font-size: 24px; }
             .controls { margin-bottom: 16px; align-items: center; }
-            .form-group { flex-direction: row; align-items: center; }
+            
+            /* 手機控制列並排 */
+            .controls .form-group { flex-direction: row; align-items: center; }
             
             .products-container {
                 grid-template-columns: 1fr; 
@@ -175,19 +175,65 @@
             .product-card { padding: 12px; }
             .product-inputs { gap: 8px; margin-bottom: 8px; }
 
-            .unit-flex-row { grid-template-columns: 1fr; }
+            /* 重點：讓每個輸入組變成左右橫向排版，絕不換行 */
+            .product-inputs .form-group {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                width: 100%;
+            }
+            
+            /* 固定左側標籤寬度，確保右側格子完美對齊 */
+            .product-inputs .form-label {
+                width: 50px;
+                text-align: left;
+                margin-bottom: 0;
+            }
+            
+            .product-inputs .form-control {
+                flex: 1;
+                padding: 6px 10px;
+            }
+
+            /* 手機版大單位隱藏，維持一行流 */
+            .unit-flex-row { display: block; width: 100%; }
+            .unit-container { width: 100%; }
             .unit-container.big-unit-hide { display: none; }
 
-            .package-box-row { gap: 8px; }
+            /* 拆開包裝數與箱數，讓它們在手機版也是獨立的一行橫流 */
+            .package-box-row { 
+                display: flex;
+                flex-direction: column;
+                gap: 8px; 
+                width: 100%;
+            }
+
             .calculation-result { min-height: 44px; padding: 6px 12px; }
         }
 
         /* 📱 手機打橫保持 2 欄並排 */
         @media (max-width: 950px) and (orientation: landscape) {
             .products-container { grid-template-columns: 1fr 1fr; gap: 12px; }
-            .unit-flex-row { grid-template-columns: 1fr; }
+            
+            .product-inputs .form-group {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                width: 100%;
+            }
+            .product-inputs .form-label {
+                width: 50px;
+                margin-bottom: 0;
+            }
+            .product-inputs .form-control {
+                flex: 1;
+                padding: 6px 10px;
+            }
+            .unit-flex-row { display: block; width: 100%; }
             .unit-container.big-unit-hide { display: none; }
-            .package-box-row { gap: 8px; }
+            .package-box-row { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         }
     </style>
 </head>
@@ -282,7 +328,7 @@
                 card.className = 'product-card';
                 card.innerHTML = `
                     <div class="product-inputs">
-                        <div style="font-weight: 600; color: var(--color-text-secondary); font-size:14px;">項目 ${index + 1}</div>
+                        <div style="font-weight: 600; color: var(--color-text-secondary); font-size:14px; margin-bottom: 2px;">項目 ${index + 1}</div>
                         <div class="form-group">
                             <label class="form-label">價格</label>
                             <input type="number" class="form-control input-price" placeholder="請輸入金額" min="0" step="0.01">
