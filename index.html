@@ -127,7 +127,7 @@
         
         /* 雙欄大單位的連動排版 */
         .unit-flex-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .unit-container { display: flex; align-items: center; gap: 4px; }
+        .unit-container { display: flex; align-items: center; gap: 4px; width: 100%; }
         .unit-text { font-size: 11px; color: var(--color-text-secondary); white-space: nowrap; }
 
         /* Calculation Result */
@@ -284,11 +284,11 @@
                     <div class="product-inputs">
                         <div style="font-weight: 600; color: var(--color-text-secondary); font-size:14px;">項目 ${index + 1}</div>
                         <div class="form-group">
-                            <label class="form-label">價格 (元)</label>
+                            <label class="form-label">價格</label>
                             <input type="number" class="form-control input-price" placeholder="請輸入金額" min="0" step="0.01">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">容量 / 重量 / 數量</label>
+                            <label class="form-label">數量</label>
                             <div class="unit-flex-row">
                                 <div class="unit-container">
                                     <input type="number" class="form-control input-g" placeholder="輸入小單位" min="0" step="0.01">
@@ -413,7 +413,6 @@
                 if (best.cardEl) best.cardEl.classList.add('best-deal');
                 const saving = worst !== best ? ((best.gramsPerYuan - worst.gramsPerYuan) / worst.gramsPerYuan * 100).toFixed(1) : 0;
 
-                // 修改這裡：精簡顯示文字
                 this.bestDealInfo.innerHTML = `
                     <h4 style="margin:0 0 8px 0; color:var(--color-primary); font-size:16px;">🏆 最划算選擇是：項目 ${best.index + 1}</h4>
                     <p style="margin:0; font-size:14px;">每 1 元可買到 <strong>${best.gramsPerYuan.toFixed(2)}</strong> 單位量 ${saving > 0 ? `(比最貴的省下 <strong>${saving}%</strong>)` : ''}</p>
